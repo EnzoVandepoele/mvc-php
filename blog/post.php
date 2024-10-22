@@ -11,6 +11,6 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 }
 
 $post = getPost($identifier);
-$comments = getComments($identifier);
+// $comments = getComments($identifier);
 
 require('templates/post.php');
