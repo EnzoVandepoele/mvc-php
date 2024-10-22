@@ -1,5 +1,4 @@
 <?php
-// src/model.php
 
 function getPosts() {
     $database = dbConnect();
@@ -14,8 +13,10 @@ function getPosts() {
             'content' => $row['content'],
             'identifier' => $row['id'],
         ];
+
         $posts[] = $post;
     }
+
     return $posts;
 }
 
@@ -25,6 +26,7 @@ function getPost($identifier) {
         "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') AS french_creation_date FROM posts WHERE id = ?"
     );
     $statement->execute([$identifier]);
+
     $row = $statement->fetch();
     $post = [
         'title' => $row['title'],
@@ -32,10 +34,13 @@ function getPost($identifier) {
         'content' => $row['content'],
         'identifier' => $row['id'],
     ];
+
     return $post;
 }
 
-function dbConnect() {
+function dbConnect()
+{
     $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+
     return $database;
 }

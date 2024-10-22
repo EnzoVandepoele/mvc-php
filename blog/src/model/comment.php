@@ -1,5 +1,4 @@
 <?php
-// src/model/comment.php
 
 function getComments(string $post)
 {
@@ -37,5 +36,6 @@ function createComment(string $post, string $author, string $comment)
 function commentDbConnect()
 {
     $database = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+
     return $database;
 }

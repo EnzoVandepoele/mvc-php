@@ -8,25 +8,28 @@ try {
     if (isset($_GET['action']) && $_GET['action'] !== '') {
         if ($_GET['action'] === 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    $identifier = $_GET['id'];
-                    post($identifier);
-                } else {
-                    throw new Exception('Aucun identifiant de billet envoyé');
-                }
-            } elseif ($_GET['action'] === 'addComment') {
-                if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    $identifier = $_GET['id'];
-                    addComment($identifier, $_POST);
-                } else {
-                    throw new Exception('Aucun identifiant de billet envoyé');
-                }
+                $identifier = $_GET['id'];
+
+                post($identifier);
             } else {
-                throw new Exception("La page que vous recherchez n'existe pas.");
+                throw new Exception('Aucun identifiant de billet envoyé');
+            }
+        } elseif ($_GET['action'] === 'addComment') {
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                $identifier = $_GET['id'];
+
+                addComment($identifier, $_POST);
+            } else {
+                throw new Exception('Aucun identifiant de billet envoyé');
             }
         } else {
-            homepage();
+            throw new Exception("La page que vous recherchez n'existe pas.");
+        }   
+    } else {
+        homepage();
     }
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();
+
     require('templates/error.php');
 }
