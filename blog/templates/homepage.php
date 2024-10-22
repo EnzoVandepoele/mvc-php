@@ -27,5 +27,5 @@
         <?php
         }
         ?>
-    </body>
+    </body> 
 </html>
