@@ -24,7 +24,7 @@ try {
             }
         } else {
             throw new Exception("La page que vous recherchez n'existe pas.");
-        }   
+        }
     } else {
         homepage();
     }

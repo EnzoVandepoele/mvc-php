@@ -2,15 +2,33 @@
 
 class Post
 {
-    public string $title;
-    public string $frenchCreationDate;
-    public string $content;
-    public int $identifier;
+    public $title;
+    public $frenchCreationDate;
+    public $content;
+    public $identifier;
 }
 
 class PostRepository
 {
-    public ?PDO $database = null;
+    public $database = null;
+
+    public function getPost(string $identifier): Post
+    {
+        $this->dbConnect();
+        $statement = $this->database->prepare(
+            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') AS french_creation_date FROM posts WHERE id = ?"
+        );
+        $statement->execute([$identifier]);
+
+        $row = $statement->fetch();
+        $post = new Post();
+        $post->title = $row['title'];
+        $post->frenchCreationDate = $row['french_creation_date'];
+        $post->content = $row['content'];
+        $post->identifier = $row['id'];
+
+        return $post;
+    }
 
     public function getPosts(): array
     {
@@ -31,26 +49,6 @@ class PostRepository
 
         return $posts;
     }
-
-    public function getPost(/*PostRepository $this,*/ string $identifier): Post
-    {
-        $this->dbConnect($this);
-        $statement = $this->database->prepare(
-            "SELECT id, title, content,
-            DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss')
-            AS french_creation_date FROM posts WHERE id = ?"
-        );
-        $statement->execute([$identifier]);
-
-        $row = $statement->fetch();
-        $post = new Post();
-        $post->title = $row['title'];
-        $post->frenchCreationDate = $row['french_creation_date'];
-        $post->content = $row['content'];
-        $post->identifier = $row['id'];
-
-        return $post;
-    }        
 
     public function dbConnect()
     {

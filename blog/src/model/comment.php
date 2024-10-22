@@ -2,12 +2,12 @@
 
 class Comment
 {
-    public string $author;
-    public string $frenchCreationDate;
-    public string $comment;
+    public $author;
+    public $frenchCreationDate;
+    public $comment;
 }
 
-function getComments(string $post)
+function getComments(string $post): array
 {
     $database = commentDbConnect();
     $statement = $database->prepare(
